@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.ProfilController"
+      spacing="18" style="-fx-padding: 0;">
+
+    <HBox alignment="CENTER_LEFT" styleClass="page-header">
+        <VBox spacing="3">
+            <Label text="Mon profil" styleClass="page-title"/>
+            <Label text="Informations de session et connexion applicative." styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+    </HBox>
+
+    <HBox spacing="18">
+        <VBox spacing="14" styleClass="card" HBox.hgrow="ALWAYS">
+            <Label text="Identité" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+            <GridPane hgap="18" vgap="14">
+                <Label text="Nom complet" styleClass="form-label" GridPane.rowIndex="0"/>
+                <Label fx:id="fullNameLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="Identifiant" styleClass="form-label" GridPane.rowIndex="1"/>
+                <Label fx:id="usernameLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Rôle" styleClass="form-label" GridPane.rowIndex="2"/>
+                <Label fx:id="roleLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="État" styleClass="form-label" GridPane.rowIndex="3"/>
+                <Label fx:id="sessionLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </GridPane>
+        </VBox>
+        <VBox spacing="14" styleClass="card" HBox.hgrow="ALWAYS">
+            <Label text="Connexion" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+            <GridPane hgap="18" vgap="14">
+                <Label text="Serveur" styleClass="form-label" GridPane.rowIndex="0"/>
+                <Label fx:id="serverLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="Délai gRPC" styleClass="form-label" GridPane.rowIndex="1"/>
+                <Label fx:id="deadlineLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Thème" styleClass="form-label" GridPane.rowIndex="2"/>
+                <Label fx:id="themeLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </GridPane>
+        </VBox>
+    </HBox>
+</VBox>

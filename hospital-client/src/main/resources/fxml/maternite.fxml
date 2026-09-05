@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.MaterniteController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="page-header">
+        <VBox spacing="3">
+            <Label text="Maternité" styleClass="page-title"/>
+            <Label text="Suivi prénatal, dossiers de grossesse et accouchements." styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="patientIdField" promptText="ID patiente..." prefWidth="140"/>
+        <Button text="Rechercher" styleClass="btn-primary" onAction="#onSearchPatient"/>
+        <Button text="+ Nouveau dossier" styleClass="btn-success" onAction="#onNewDossier"/>
+    </HBox>
+
+    <TableView fx:id="dossiersTable" prefHeight="240" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colDossierId" text="Dossier" prefWidth="85"/>
+            <TableColumn fx:id="colPatient" text="Patiente ID" prefWidth="100"/>
+            <TableColumn fx:id="colOuverture" text="Ouvert le" prefWidth="150"/>
+            <TableColumn fx:id="colDpa" text="DPA" prefWidth="150"/>
+            <TableColumn fx:id="colGrossesses" text="Grossesses" prefWidth="105"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="card">
+        <Label text="Dossier sélectionné" styleClass="form-label"/>
+        <TextField fx:id="dossierIdField" promptText="ID dossier" prefWidth="120"/>
+        <Button text="Ouvrir le suivi" styleClass="btn-secondary" onAction="#onOpenDossier"/>
+        <Button text="+ Ajouter un suivi" styleClass="btn-outline" onAction="#onAddSuivi"/>
+        <Button text="Enregistrer accouchement" styleClass="btn-primary" onAction="#onAccouchement"/>
+    </HBox>
+
+    <VBox spacing="8" VBox.vgrow="ALWAYS">
+        <Label text="Consultations prénatales" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <TableView fx:id="suivisTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colSuiviDate" text="Date" prefWidth="150"/>
+                <TableColumn fx:id="colSuiviAge" text="Âge gestationnel" prefWidth="130"/>
+                <TableColumn fx:id="colSuiviPoids" text="Poids" prefWidth="95"/>
+                <TableColumn fx:id="colSuiviTension" text="Tension" prefWidth="120"/>
+                <TableColumn fx:id="colSuiviMedecin" text="Médecin" prefWidth="160"/>
+                <TableColumn fx:id="colSuiviObs" text="Observations" prefWidth="260"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Recherchez une patiente ou ouvrez un dossier." styleClass="muted-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

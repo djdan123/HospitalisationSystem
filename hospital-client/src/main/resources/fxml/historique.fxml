@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.HistoriqueController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label text="📜 Historique du patient" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="patientIdField" promptText="ID patient..." prefWidth="150"/>
+        <Button text="🔍 Charger" styleClass="btn-primary" onAction="#onLoad"/>
+        <Button text="⟳ Actualiser" styleClass="btn-secondary" onAction="#onLoad"/>
+    </HBox>
+
+    <TabPane VBox.vgrow="ALWAYS">
+        <Tab text="Consultations" closable="false">
+            <TableView fx:id="tableConsultations" styleClass="table-view">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50"/>
+                    <TableColumn text="Date" prefWidth="150"/>
+                    <TableColumn text="Motif" prefWidth="200"/>
+                    <TableColumn text="Médecin" prefWidth="150"/>
+                    <TableColumn text="Diagnostic" prefWidth="200"/>
+                    <TableColumn text="Statut" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </Tab>
+        <Tab text="Hospitalisations" closable="false">
+            <TableView fx:id="tableHospitalisations" styleClass="table-view">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50"/>
+                    <TableColumn text="Admission" prefWidth="150"/>
+                    <TableColumn text="Sortie" prefWidth="150"/>
+                    <TableColumn text="Motif" prefWidth="200"/>
+                    <TableColumn text="Statut" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </Tab>
+        <Tab text="Ordonnances" closable="false">
+            <TableView fx:id="tableOrdonnances" styleClass="table-view">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50"/>
+                    <TableColumn text="Date" prefWidth="150"/>
+                    <TableColumn text="Statut" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </Tab>
+    </TabPane>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Saisissez un ID patient" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

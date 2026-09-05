@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.RecusController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="page-header">
+        <VBox spacing="3">
+            <Label text="Reçus de paiement" styleClass="page-title"/>
+            <Label text="Retrouvez et réimprimez les paiements enregistrés." styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="patientIdField" promptText="ID patient..." prefWidth="150"/>
+        <Button text="Charger les paiements" styleClass="btn-primary" onAction="#onLoadPayments"/>
+        <Button text="Générer le reçu" styleClass="btn-success" onAction="#onGenerateReceipt"/>
+    </HBox>
+
+    <SplitPane dividerPositions="0.56" VBox.vgrow="ALWAYS">
+        <items>
+            <TableView fx:id="paymentsTable" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colPaymentId" text="ID" prefWidth="70"/>
+                    <TableColumn fx:id="colFacture" text="Facture ID" prefWidth="100"/>
+                    <TableColumn fx:id="colMontant" text="Montant" prefWidth="105"/>
+                    <TableColumn fx:id="colMode" text="Mode" prefWidth="125"/>
+                    <TableColumn fx:id="colDate" text="Date" prefWidth="160"/>
+                    <TableColumn fx:id="colReference" text="Référence" prefWidth="160"/>
+                </columns>
+            </TableView>
+            <VBox spacing="10" styleClass="card">
+                <Label text="Aperçu du reçu" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <Label fx:id="receiptNumberLabel" text="Sélectionnez un paiement puis générez son reçu." styleClass="muted-label" wrapText="true"/>
+                <TextArea fx:id="receiptContentArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS" promptText="Le contenu du reçu apparaîtra ici."/>
+            </VBox>
+        </items>
+    </SplitPane>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Saisissez un ID patient." styleClass="muted-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.OrdonnanceController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <!-- Barre d'actions -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label text="Gestion des ordonnances" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+ Nouvelle ordonnance" styleClass="btn-success" onAction="#onNewOrdonnance"/>
+        <Button text="Actualiser catalogue" styleClass="btn-secondary" onAction="#onRefreshMeds"/>
+    </HBox>
+
+    <!-- Deux colonnes : liste ordonnances + détail / délivrance -->
+    <HBox spacing="16" VBox.vgrow="ALWAYS">
+
+        <!-- Liste des ordonnances de la session -->
+        <VBox spacing="10" prefWidth="420" HBox.hgrow="ALWAYS">
+            <Label text="Ordonnances (session)" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="tableOrdonnances" VBox.vgrow="ALWAYS" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colOrdId" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="colOrdPatient" text="Patient" prefWidth="80"/>
+                    <TableColumn fx:id="colOrdType" text="Type" prefWidth="100"/>
+                    <TableColumn fx:id="colOrdDate" text="Date" prefWidth="100"/>
+                    <TableColumn fx:id="colOrdStatut" text="Statut" prefWidth="90"/>
+                </columns>
+            </TableView>
+            <Label fx:id="statusLabel" text="Créez une ordonnance pour commencer"
+                   style="-fx-text-fill: #64748b; -fx-font-size: 12px;"/>
+        </VBox>
+
+        <!-- Panneau détail / délivrance -->
+        <VBox spacing="12" prefWidth="480" HBox.hgrow="ALWAYS" styleClass="card">
+            <Label text="Détail &amp; délivrance" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <Label fx:id="detailHeader" text="Sélectionnez ou créez une ordonnance"
+                   style="-fx-text-fill: #64748b; -fx-wrap-text: true;"/>
+
+            <Separator/>
+
+            <Label text="Lignes de prescription" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="tableLignes" prefHeight="180" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colLigMed" text="Médicament" prefWidth="160"/>
+                    <TableColumn fx:id="colLigQte" text="Qté" prefWidth="60"/>
+                    <TableColumn fx:id="colLigPoso" text="Posologie" prefWidth="140"/>
+                    <TableColumn fx:id="colLigAction" text="" prefWidth="90"/>
+                </columns>
+            </TableView>
+
+            <HBox spacing="10">
+                <Button fx:id="btnDispenseAll" text="Délivrer l'ordonnance" styleClass="btn-primary"
+                        onAction="#onDispense" disable="true"/>
+                <Button text="Ajouter une ligne" styleClass="btn-outline" onAction="#onAddLigne"/>
+            </HBox>
+
+            <Separator/>
+
+            <VBox spacing="6">
+                <Label text="Workflow pharmacien" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                <Label fx:id="workflowHint" wrapText="true"
+                       text="Ambulatoire : préparer et remettre au patient. Hospitalisé : livrer au service de soins."
+                       style="-fx-text-fill: #64748b; -fx-font-size: 12px;"/>
+            </VBox>
+        </VBox>
+    </HBox>
+</VBox>

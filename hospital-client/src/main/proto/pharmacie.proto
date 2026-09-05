@@ -1,0 +1,290 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.pharmacie";
+option java_outer_classname = "PharmacieProto";
+
+package pharmacie;
+
+// ============================================================
+// SERVICE PRINCIPAL
+// ============================================================
+service PharmacieService {
+
+  // ---- Médicaments ----
+  rpc CreateMedicament(CreateMedicamentRequest) returns (MedicamentResponse);
+  rpc GetMedicament(GetMedicamentRequest) returns (MedicamentResponse);
+  rpc GetMedicaments(GetMedicamentsRequest) returns (MedicamentsResponse);
+  rpc UpdateMedicament(UpdateMedicamentRequest) returns (MedicamentResponse);
+  rpc UpdateStock(UpdateStockRequest) returns (MedicamentResponse);
+
+  // ---- Ordonnances ----
+  rpc CreateOrdonnance(CreateOrdonnanceRequest) returns (OrdonnanceResponse);
+  rpc GetOrdonnance(GetOrdonnanceRequest) returns (OrdonnanceResponse);
+  rpc GetOrdonnancesByPatient(GetOrdonnancesByPatientRequest) returns (OrdonnancesResponse);
+  rpc GetOrdonnancesEnAttente(GetOrdonnancesEnAttenteRequest) returns (OrdonnancesResponse);
+  rpc DispenseMedicament(DispenseMedicamentRequest) returns (DispenseResponse);
+
+  // ---- Gestion de stock (mouvements) ----
+  rpc StockEntree(StockEntreeRequest) returns (StockMouvementResponse);
+  rpc StockSortie(StockSortieRequest) returns (StockMouvementResponse);
+  rpc StockRetour(StockRetourRequest) returns (StockMouvementResponse);
+  rpc StockInventaire(StockInventaireRequest) returns (StockMouvementResponse);
+  rpc BloquerLot(BloquerLotRequest) returns (MedicamentResponse);
+  rpc GetAlertesStock(GetAlertesStockRequest) returns (AlertesStockResponse);
+  rpc GetHistoriqueStock(GetHistoriqueStockRequest) returns (StockMouvementsResponse);
+
+  // ---- Rapports ----
+  rpc GetRapportValorisation(GetRapportRequest) returns (RapportValorisationResponse);
+  rpc GetRapportTopConso(GetRapportTopConsoRequest) returns (RapportTopConsoResponse);
+  rpc GetRapportDepensesService(GetRapportRequest) returns (RapportDepensesResponse);
+  rpc GetRapportPeremption(GetRapportPeremptionRequest) returns (MedicamentsResponse);
+  rpc GetRapportRuptures(GetRapportRequest) returns (MedicamentsResponse);
+  rpc GetRapportLot(GetRapportLotRequest) returns (StockMouvementsResponse);
+  rpc GetRapportStupefiants(GetRapportRequest) returns (StockMouvementsResponse);
+  rpc GetRapportOrdonnances(GetRapportRequest) returns (RapportOrdonnancesResponse);
+  rpc GetRapportAudit(GetRapportAuditRequest) returns (StockMouvementsResponse);
+  rpc GetRapportKpiRotation(GetRapportKpiRequest) returns (RapportKpiRotationResponse);
+}
+
+// ============================================================
+// MESSAGES – MÉDICAMENTS
+// ============================================================
+message Medicament {
+  int64 id = 1;
+  string code = 2;
+  string nom = 3;
+  string description = 4;
+  int32 stock = 5;
+  double prix_unitaire = 6;
+  string unite = 7;
+  string statut = 8;
+  int32 seuil_min = 9;
+  int32 seuil_max = 10;
+  string date_peremption = 11;   // yyyy-MM-dd
+  string numero_lot = 12;
+  bool is_stupefiant = 13;
+  string emplacement = 14;
+}
+
+message CreateMedicamentRequest {
+  string code = 1;
+  string nom = 2;
+  string description = 3;
+  int32 stock_initial = 4;
+  double prix_unitaire = 5;
+  string unite = 6;
+}
+message GetMedicamentRequest { int64 id = 1; }
+message GetMedicamentsRequest { bool only_available = 1; }
+
+message UpdateMedicamentRequest {
+  int64 id = 1;
+  string nom = 2;
+  string description = 3;
+  double prix_unitaire = 4;
+  string statut = 5;
+}
+
+message UpdateStockRequest {
+  int64 medicament_id = 1;
+  int32 quantite = 2;    // positif = entrée, négatif = sortie
+  string motif = 3;
+}
+
+// ============================================================
+// MESSAGES – ORDONNANCES
+// ============================================================
+message Ordonnance {
+  int64 id = 1;
+  int64 patient_id = 2;
+  int64 medecin_id = 3;
+  string date_ordonnance = 4;
+  string statut = 5;                // CREEE / DELIVREE / PARTIELLE / ANNULEE
+  repeated OrdonnanceLigne lignes = 6;
+  string type_patient = 7;          // AMBULATOIRE / HOSPITALISE
+  string service_soins = 8;
+  string observations = 9;
+}
+
+message OrdonnanceLigne {
+  int64 medicament_id = 1;
+  string nom_medicament = 2;
+  int32 quantite = 3;
+  string posologie = 4;
+  int32 quantite_delivree = 5;
+}
+
+message CreateOrdonnanceRequest {
+  int64 patient_id = 1;
+  int64 medecin_id = 2;
+  repeated OrdonnanceLigne lignes = 3;
+  string type_patient = 4;
+  string service_soins = 5;
+  string observations = 6;
+}
+message GetOrdonnanceRequest { int64 id = 1; }
+message GetOrdonnancesByPatientRequest { int64 patient_id = 1; }
+message GetOrdonnancesEnAttenteRequest {}
+
+message DispenseMedicamentRequest {
+  int64 ordonnance_id = 1;
+  int64 medicament_id = 2;
+  int32 quantite = 3;
+}
+
+// ============================================================
+// MESSAGES – MOUVEMENTS DE STOCK
+// ============================================================
+message StockEntreeRequest {
+  int64 medicament_id = 1;
+  int32 quantite = 2;
+  string numero_lot = 3;
+  string date_peremption = 4;   // yyyy-MM-dd
+  string source = 5;            // grossiste, laboratoire, etc.
+  string user_login = 6;
+  string motif = 7;
+}
+
+message StockSortieRequest {
+  int64 medicament_id = 1;
+  int32 quantite = 2;
+  string motif = 3;
+  int64 patient_id = 4;
+  string service_soins = 5;
+  string user_login = 6;
+  bool double_controle = 7;
+  string controleur = 8;
+}
+
+message StockRetourRequest {
+  int64 medicament_id = 1;
+  int32 quantite = 2;
+  string service_soins = 3;
+  string user_login = 4;
+  string motif = 5;
+}
+
+message StockInventaireRequest {
+  int64 medicament_id = 1;
+  int32 quantite_comptee = 2;
+  string user_login = 3;
+  string motif = 4;
+}
+
+message BloquerLotRequest {
+  string numero_lot = 1;
+  string motif = 2;
+}
+
+message GetAlertesStockRequest {
+  int32 jours_peremption = 1;   // défaut 30
+}
+
+message GetHistoriqueStockRequest {
+  int64 medicament_id = 1;      // 0 = tous (derniers 50)
+}
+
+// ============================================================
+// MESSAGES DE RÉPONSE – STOCK & ORDONNANCES
+// ============================================================
+message MedicamentResponse { Medicament medicament = 1; }
+message MedicamentsResponse { repeated Medicament medicaments = 1; }
+message OrdonnanceResponse { Ordonnance ordonnance = 1; }
+message OrdonnancesResponse { repeated Ordonnance ordonnances = 1; }
+
+message DispenseResponse {
+  bool success = 1;
+  string message = 2;
+  int32 stock_restant = 3;
+  Ordonnance ordonnance = 4;
+}
+
+// ---- Mouvements ----
+message StockMouvementMsg {
+  int64 id = 1;
+  int64 medicament_id = 2;
+  string type_mouvement = 3;      // ENTREE / SORTIE / RETOUR / INVENTAIRE / BLOQUAGE
+  int32 quantite = 4;
+  int32 stock_avant = 5;
+  int32 stock_apres = 6;
+  string numero_lot = 7;
+  string date_peremption = 8;
+  string motif = 9;
+  string source_dest = 10;        // source (entrée) ou destination (sortie)
+  int64 patient_id = 11;
+  string user_login = 12;
+  string service_soins = 13;
+  bool double_controle = 14;
+  string controleur = 15;
+  string date_mouvement = 16;     // ISO-8601
+}
+
+message StockMouvementResponse { StockMouvementMsg mouvement = 1; }
+message StockMouvementsResponse { repeated StockMouvementMsg mouvements = 1; }
+
+message AlertesStockResponse {
+  repeated Medicament stock_faible = 1;   // stock < seuil_min
+  repeated Medicament peremption = 2;     // péremption dans < jours_peremption
+  repeated Medicament surstock = 3;       // stock > seuil_max
+}
+
+// ============================================================
+// MESSAGES – RAPPORTS
+// ============================================================
+message GetRapportRequest {
+  string depuis = 1; // yyyy-MM-dd (optionnel)
+}
+message GetRapportTopConsoRequest {
+  int32 limit = 1;
+  string service = 2;
+  string depuis = 3;
+}
+message GetRapportPeremptionRequest { int32 jours = 1; }
+message GetRapportLotRequest { string numero_lot = 1; }
+message GetRapportAuditRequest { string user_login = 1; }
+message GetRapportKpiRequest { int32 jours = 1; }
+
+message LigneValorisationMsg {
+  string code = 1;
+  string nom = 2;
+  int32 stock = 3;
+  double prix = 4;
+  double valeur = 5;
+  string unite = 6;
+}
+message RapportValorisationResponse {
+  double total = 1;
+  repeated LigneValorisationMsg lignes = 2;
+}
+
+message TopConsoMsg {
+  string code = 1;
+  string nom = 2;
+  int32 quantite = 3;
+  string service = 4;
+}
+message RapportTopConsoResponse { repeated TopConsoMsg lignes = 1; }
+
+message DepenseServiceMsg {
+  string service = 1;
+  int32 quantite = 2;
+  double valeur = 3;
+}
+message RapportDepensesResponse { repeated DepenseServiceMsg lignes = 1; }
+
+message RapportOrdonnancesResponse {
+  int32 total = 1;
+  int32 delivrees = 2;
+  int32 partielles = 3;
+  int32 creees = 4;
+}
+
+message KpiRotationMsg {
+  string code = 1;
+  string nom = 2;
+  int32 sorties = 3;
+  int32 stock_actuel = 4;
+  double rotation = 5;
+}
+message RapportKpiRotationResponse { repeated KpiRotationMsg lignes = 1; }

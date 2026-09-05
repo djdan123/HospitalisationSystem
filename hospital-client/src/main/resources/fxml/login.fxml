@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>    
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.hospital.controller.LoginController"
+           styleClass="login-root"
+           prefWidth="1100" prefHeight="700">
+
+    <ImageView preserveRatio="false" fitWidth="1100" fitHeight="700" mouseTransparent="true">
+        <image>
+            <Image url="@../images/hospital-welcome.png"/>
+        </image>
+    </ImageView>
+
+    <VBox alignment="CENTER_LEFT" spacing="0" maxWidth="1100" styleClass="login-content">
+        <VBox styleClass="login-card" spacing="18" alignment="CENTER">
+            <!-- Logo / Titre -->
+            <VBox alignment="CENTER" spacing="6">
+                <Label text="🏥" style="-fx-font-size: 42px;"/>
+                <Label text="Hospital Management System" styleClass="login-title"/>
+                <Label text="Connexion à la plateforme hospitalière" styleClass="login-subtitle"/>
+            </VBox>
+
+            <Region prefHeight="8"/>
+
+            <!-- Identifiant -->
+            <VBox spacing="4" maxWidth="320">
+                <Label text="Identifiant" styleClass="form-label"/>
+                <TextField fx:id="usernameField" promptText="Ex: admin" styleClass="login-field"
+                           maxWidth="320"/>
+            </VBox>
+
+            <!-- Mot de passe -->
+            <VBox spacing="4" maxWidth="320">
+                <Label text="Mot de passe" styleClass="form-label"/>
+                <HBox spacing="0" maxWidth="320">
+                    <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="login-field"
+                                   HBox.hgrow="ALWAYS" maxWidth="280"/>
+                    <Button fx:id="togglePasswordBtn" text="👁" onAction="#togglePassword"
+                            style="-fx-background-color: #e2e8f0; -fx-background-radius: 0 8 8 0; -fx-cursor: hand;"/>
+                </HBox>
+                <TextField fx:id="passwordVisibleField" promptText="••••••••" styleClass="login-field"
+                           maxWidth="320" managed="false" visible="false"/>
+            </VBox>
+
+            <!-- Erreur -->
+            <Label fx:id="errorLabel" text="" style="-fx-text-fill: #c62828; -fx-font-size: 12px;"
+                   wrapText="true" maxWidth="320" managed="false" visible="false"/>
+
+            <!-- Bouton -->
+            <Button fx:id="loginBtn" text="SE CONNECTER" styleClass="login-btn"
+                    maxWidth="320" onAction="#onLogin" defaultButton="true"/>
+
+            <Region prefHeight="4"/>
+
+            <!-- État serveur -->
+            <HBox alignment="CENTER" spacing="8">
+                <Label fx:id="serverStatusLabel" text="● Vérification du serveur..."
+                       style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+            </HBox>
+
+            <Label text="Serveur : 192.168.1.10" style="-fx-font-size: 11px; -fx-text-fill: #94a3b8;"/>
+        </VBox>
+    </VBox>
+</StackPane>

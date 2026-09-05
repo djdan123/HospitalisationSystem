@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.maternite";
+option java_outer_classname = "MaterniteProto";
+
+package maternite;
+
+service MaterniteService {
+  rpc CreateDossierMaternite(CreateDossierMaterniteRequest) returns (DossierMaterniteResponse);
+  rpc GetDossierMaternite(GetDossierMaterniteRequest) returns (DossierMaterniteResponse);
+  rpc AddSuiviGrossesse(AddSuiviGrossesseRequest) returns (SuiviGrossesseResponse);
+  rpc GetSuiviGrossesse(GetSuiviGrossesseRequest) returns (SuivisGrossesseResponse);
+  rpc RegisterAccouchement(RegisterAccouchementRequest) returns (AccouchementResponse);
+  rpc GetAccouchement(GetAccouchementRequest) returns (AccouchementResponse);
+  rpc GetHistoriqueMaternite(GetHistoriqueMaterniteRequest) returns (HistoriqueMaterniteResponse);
+}
+
+message DossierMaternite {
+  int64 id = 1;
+  int64 patient_id = 2;
+  string date_ouverture = 3;
+  string date_dernieres_regles = 4;
+  string date_prevue_accouchement = 5;
+  int32 nombre_grossesses = 6;
+  string groupe_sanguin = 7;
+  string statut = 8;          // OUVERT / CLOS / TRANSFERE
+  string observations = 9;
+}
+
+message SuiviGrossesse {
+  int64 id = 1;
+  int64 dossier_id = 2;
+  string date_suivi = 3;
+  int32 age_gestationnel_semaines = 4;
+  double poids_kg = 5;
+  double tension_systolique = 6;
+  double tension_diastolique = 7;
+  string observations = 8;
+  string medecin = 9;
+}
+
+message Accouchement {
+  int64 id = 1;
+  int64 dossier_id = 2;
+  string date_accouchement = 3;
+  string type_accouchement = 4;  // VOIE_BASSE / CESARIENNE
+  int32 nombre_enfants = 5;
+  string observations = 6;
+  repeated NouveauNe nouveau_nes = 7;
+}
+
+message NouveauNe {
+  string sexe = 1;
+  double poids_kg = 2;
+  double taille_cm = 3;
+  int32 score_apgar = 4;
+  string observations = 5;
+}
+
+message CreateDossierMaterniteRequest {
+  int64 patient_id = 1;
+  string date_dernieres_regles = 2;
+  int32 nombre_grossesses = 3;
+  string groupe_sanguin = 4;
+  string observations = 5;
+}
+
+message GetDossierMaterniteRequest {
+  int64 id = 1;
+}
+
+message AddSuiviGrossesseRequest {
+  int64 dossier_id = 1;
+  string date_suivi = 2;
+  int32 age_gestationnel_semaines = 3;
+  double poids_kg = 4;
+  double tension_systolique = 5;
+  double tension_diastolique = 6;
+  string observations = 7;
+  string medecin = 8;
+}
+
+message GetSuiviGrossesseRequest {
+  int64 dossier_id = 1;
+}
+
+message RegisterAccouchementRequest {
+  int64 dossier_id = 1;
+  string date_accouchement = 2;
+  string type_accouchement = 3;
+  int32 nombre_enfants = 4;
+  string observations = 5;
+  repeated NouveauNe nouveau_nes = 6;
+}
+
+message GetAccouchementRequest {
+  int64 dossier_id = 1;
+}
+
+message GetHistoriqueMaterniteRequest {
+  int64 patient_id = 1;
+}
+
+message DossierMaterniteResponse {
+  DossierMaternite dossier = 1;
+}
+
+message SuiviGrossesseResponse {
+  SuiviGrossesse suivi = 1;
+}
+
+message SuivisGrossesseResponse {
+  repeated SuiviGrossesse suivis = 1;
+}
+
+message AccouchementResponse {
+  Accouchement accouchement = 1;
+}
+
+message HistoriqueMaterniteResponse {
+  repeated DossierMaternite dossiers = 1;
+  repeated Accouchement accouchements = 2;
+}

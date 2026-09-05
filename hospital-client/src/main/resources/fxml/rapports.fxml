@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.RapportController"
+      spacing="12" style="-fx-padding: 0;">
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Rapports Pharmacie" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="comboRapport" prefWidth="260"/>
+        <Button text="Charger" styleClass="btn-primary" onAction="#onCharger"/>
+        <Button text="Export PDF" styleClass="btn-success" onAction="#onExportPdf"/>
+        <Button text="Actualiser KPI" styleClass="btn-secondary" onAction="#onRefreshKpi"/>
+    </HBox>
+
+    <!-- KPI cards -->
+    <HBox spacing="12" fx:id="kpiBox">
+        <VBox styleClass="stat-card" spacing="4" prefWidth="160">
+            <Label text="💰" styleClass="stat-card-icon"/>
+            <Label fx:id="kpiValorisation" text="—" styleClass="stat-card-value"/>
+            <Label text="Valorisation stock" styleClass="stat-card-label"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="4" prefWidth="160">
+            <Label text="📋" styleClass="stat-card-icon"/>
+            <Label fx:id="kpiOrdonnances" text="—" styleClass="stat-card-value"/>
+            <Label text="Ordonnances" styleClass="stat-card-label"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="4" prefWidth="160">
+            <Label text="❌" styleClass="stat-card-icon"/>
+            <Label fx:id="kpiRuptures" text="—" styleClass="stat-card-value"/>
+            <Label text="Ruptures" styleClass="stat-card-label"/>
+        </VBox>
+        <VBox styleClass="stat-card" spacing="4" prefWidth="160">
+            <Label text="⏰" styleClass="stat-card-icon"/>
+            <Label fx:id="kpiPeremp" text="—" styleClass="stat-card-value"/>
+            <Label text="Péremption 30j" styleClass="stat-card-label"/>
+        </VBox>
+    </HBox>
+
+    <HBox spacing="12" VBox.vgrow="ALWAYS">
+        <TableView fx:id="table" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" styleClass="table-view" prefHeight="320"/>
+        <BarChart fx:id="chart" prefWidth="360" prefHeight="320" legendVisible="false">
+            <xAxis><CategoryAxis label=""/></xAxis>
+            <yAxis><NumberAxis label=""/></yAxis>
+        </BarChart>
+    </HBox>
+
+    <Label fx:id="statusLabel" text="Choisissez un rapport puis Charger" style="-fx-text-fill: #64748b;"/>
+</VBox>

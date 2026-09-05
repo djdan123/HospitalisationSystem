@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.ConsultationController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="ID patient (optionnel)..." prefWidth="200"/>
+        <Button text="Rechercher" styleClass="btn-primary" onAction="#onSearch"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+ Nouvelle consultation" styleClass="btn-success" onAction="#onNew"/>
+    </HBox>
+
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colPatient" text="Patient ID" prefWidth="100"/>
+            <TableColumn fx:id="colDate" text="Date" prefWidth="160"/>
+            <TableColumn fx:id="colMotif" text="Motif" prefWidth="200"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="120"/>
+            <TableColumn fx:id="colActions" text="Actions" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

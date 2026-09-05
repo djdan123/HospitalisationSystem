@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.accueil";
+option java_outer_classname = "AccueilProto";
+
+package accueil;
+
+// ============================================================
+// SERVICE ACCUEIL - Gestion des patients
+// ============================================================
+service AccueilService {
+  rpc CreatePatient(CreatePatientRequest) returns (PatientResponse);
+  rpc GetPatient(GetPatientRequest) returns (PatientResponse);
+  rpc GetPatientByDossier(GetPatientByDossierRequest) returns (PatientResponse);
+  rpc SearchPatients(SearchPatientsRequest) returns (PatientsResponse);
+  rpc GetPatients(GetPatientsRequest) returns (PatientsResponse);
+  rpc UpdatePatient(UpdatePatientRequest) returns (PatientResponse);
+  rpc DeletePatient(DeletePatientRequest) returns (DeletePatientResponse);
+  rpc PatientExists(PatientExistsRequest) returns (PatientExistsResponse);
+}
+
+// ------------------------------------------------------------
+// Messages
+// ------------------------------------------------------------
+message Patient {
+  int64 id = 1;
+  string numero_dossier = 2;
+  string nom = 3;
+  string prenom = 4;
+  string date_naissance = 5;   // yyyy-MM-dd
+  string sexe = 6;
+  string telephone = 7;
+  string email = 8;
+  string adresse = 9;
+  string date_creation = 10;   // ISO-8601
+  string statut = 11;          // ACTIF / INACTIF
+}
+
+message CreatePatientRequest {
+  string numero_dossier = 1;
+  string nom = 2;
+  string prenom = 3;
+  string date_naissance = 4;
+  string sexe = 5;
+  string telephone = 6;
+  string email = 7;
+  string adresse = 8;
+}
+
+message GetPatientRequest {
+  int64 id = 1;
+}
+
+message GetPatientByDossierRequest {
+  string numero_dossier = 1;
+}
+
+message SearchPatientsRequest {
+  string nom = 1;
+  string prenom = 2;
+}
+
+message GetPatientsRequest {
+  // vide = tous les patients actifs
+  bool include_inactive = 1;
+}
+
+message UpdatePatientRequest {
+  int64 id = 1;
+  string nom = 2;
+  string prenom = 3;
+  string date_naissance = 4;
+  string sexe = 5;
+  string telephone = 6;
+  string email = 7;
+  string adresse = 8;
+  string statut = 9;
+}
+
+message DeletePatientRequest {
+  int64 id = 1;
+}
+
+message DeletePatientResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PatientExistsRequest {
+  int64 id = 1;
+}
+
+message PatientExistsResponse {
+  bool exists = 1;
+}
+
+message PatientResponse {
+  Patient patient = 1;
+}
+
+message PatientsResponse {
+  repeated Patient patients = 1;
+}

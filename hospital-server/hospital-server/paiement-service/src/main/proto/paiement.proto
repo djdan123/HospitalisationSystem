@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.paiement";
+option java_outer_classname = "PaiementProto";
+
+package paiement;
+
+service PaiementService {
+  rpc CreateFacture(CreateFactureRequest) returns (FactureResponse);
+  rpc GetFacture(GetFactureRequest) returns (FactureResponse);
+  rpc GetFacturesByPatient(GetFacturesByPatientRequest) returns (FacturesResponse);
+  rpc MakePayment(MakePaymentRequest) returns (PaymentResponse);
+  rpc GetPayment(GetPaymentRequest) returns (PaymentResponse);
+  rpc GetPaymentsByPatient(GetPaymentsByPatientRequest) returns (PaymentsResponse);
+  rpc GenerateReceipt(GenerateReceiptRequest) returns (ReceiptResponse);
+}
+
+message Facture {
+  int64 id = 1;
+  int64 patient_id = 2;
+  string numero_facture = 3;
+  double montant_total = 4;
+  double montant_paye = 5;
+  double montant_restant = 6;
+  string statut = 7;          // IMPAYEE / PARTIELLEMENT_PAYEE / PAYEE / ANNULEE
+  string date_creation = 8;
+  string description = 9;
+}
+
+message Payment {
+  int64 id = 1;
+  int64 facture_id = 2;
+  int64 patient_id = 3;
+  double montant = 4;
+  string mode_paiement = 5;   // CASH / MOBILE_MONEY / CARTE / VIREMENT
+  string date_paiement = 6;
+  string reference = 7;
+}
+
+message CreateFactureRequest {
+  int64 patient_id = 1;
+  double montant_total = 2;
+  string description = 3;
+}
+
+message GetFactureRequest {
+  int64 id = 1;
+}
+
+message GetFacturesByPatientRequest {
+  int64 patient_id = 1;
+}
+
+message MakePaymentRequest {
+  int64 facture_id = 1;
+  double montant = 2;
+  string mode_paiement = 3;
+  string reference = 4;
+}
+
+message GetPaymentRequest {
+  int64 id = 1;
+}
+
+message GetPaymentsByPatientRequest {
+  int64 patient_id = 1;
+}
+
+message GenerateReceiptRequest {
+  int64 payment_id = 1;
+}
+
+message FactureResponse {
+  Facture facture = 1;
+}
+
+message FacturesResponse {
+  repeated Facture factures = 1;
+}
+
+message PaymentResponse {
+  Payment payment = 1;
+}
+
+message PaymentsResponse {
+  repeated Payment payments = 1;
+}
+
+message ReceiptResponse {
+  string numero_recu = 1;
+  string contenu = 2;
+  string date_emission = 3;
+}

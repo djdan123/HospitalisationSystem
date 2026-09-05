@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.RendezVousController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label text="📅 Gestion des rendez-vous" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Label fx:id="dateLabel" text="Aujourd'hui" style="-fx-text-fill: #64748b; -fx-font-size: 14px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <ComboBox fx:id="filtreMedecin" prefWidth="150" promptText="Tous les médecins" visible="false" managed="false"/>
+        <ComboBox fx:id="filtreStatut" prefWidth="140" promptText="Filtrer par statut"/>
+
+        <Button text="📆 Changer de jour" styleClass="btn-outline" onAction="#onChangeDay"/>
+        <Button text="⟳ Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+        <Button text="+ Nouveau rendez-vous" styleClass="btn-success" onAction="#onNewRendezVous"/>
+    </HBox>
+
+    <!-- Tableau -->
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn text="Heure" prefWidth="80">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="heure"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Patient" prefWidth="160">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="patientNom"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Médecin" prefWidth="140">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="medecinNom"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Motif" prefWidth="160">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="motif"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Statut" prefWidth="130">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="statutLabel"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Actions" prefWidth="220">
+                <cellValueFactory><javafx.scene.control.cell.PropertyValueFactory property="actions"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.ResultatsController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="page-header">
+        <VBox spacing="3">
+            <Label text="Résultats de laboratoire" styleClass="page-title"/>
+            <Label text="Consultez les analyses validées d'un patient." styleClass="page-subtitle"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="patientIdField" promptText="ID patient..." prefWidth="150"/>
+        <Button text="Charger" styleClass="btn-primary" onAction="#onLoadByPatient"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+    </HBox>
+
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+            <TableColumn fx:id="colPatient" text="Patient ID" prefWidth="110"/>
+            <TableColumn fx:id="colType" text="Analyse" prefWidth="220"/>
+            <TableColumn fx:id="colDate" text="Demandée le" prefWidth="160"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="130"/>
+            <TableColumn fx:id="colResultat" text="Résultat" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Saisissez un ID patient pour afficher les résultats." styleClass="muted-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.PatientController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <!-- Header actions -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Rechercher par nom..." prefWidth="280"/>
+        <Button text="Rechercher" styleClass="btn-primary" onAction="#onSearch"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+ Nouveau patient" styleClass="btn-success" onAction="#onNewPatient"/>
+    </HBox>
+
+    <!-- Table -->
+    <TableView fx:id="patientTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colDossier" text="N° Dossier" prefWidth="120"/>
+            <TableColumn fx:id="colNom" text="Nom" prefWidth="120"/>
+            <TableColumn fx:id="colPrenom" text="Prénom" prefWidth="120"/>
+            <TableColumn fx:id="colSexe" text="Sexe" prefWidth="70"/>
+            <TableColumn fx:id="colNaissance" text="Date naissance" prefWidth="120"/>
+            <TableColumn fx:id="colTelephone" text="Téléphone" prefWidth="130"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="90"/>
+            <TableColumn fx:id="colActions" text="Actions" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+    <!-- Status bar -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

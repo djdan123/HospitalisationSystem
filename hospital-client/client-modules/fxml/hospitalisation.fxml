@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.HospitalisationController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <ComboBox fx:id="filtreStatut" prefWidth="160"/>
+        <Button text="Filtrer" styleClass="btn-primary" onAction="#onRefresh"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="+ Nouvelle admission" styleClass="btn-success" onAction="#onAdmit"/>
+    </HBox>
+
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colPatient" text="Patient ID" prefWidth="100"/>
+            <TableColumn fx:id="colAdmission" text="Admission" prefWidth="160"/>
+            <TableColumn fx:id="colMotif" text="Motif" prefWidth="200"/>
+            <TableColumn fx:id="colChambre" text="Chambre" prefWidth="90"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="110"/>
+            <TableColumn fx:id="colActions" text="Actions" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

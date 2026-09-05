@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hospital.controller.DashboardController"
+            prefWidth="1280" prefHeight="800">
+
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar" spacing="0">
+            <VBox styleClass="sidebar-logo" spacing="2">
+                <Label text="🏥 HMS" styleClass="sidebar-logo-title"/>
+                <Label fx:id="sidebarSubtitle" text="Hospital Management" styleClass="sidebar-logo-sub"/>
+            </VBox>
+
+            <Label fx:id="menuSectionLabel" text="MENU PRINCIPAL" styleClass="sidebar-section"/>
+
+            <Button fx:id="btnDashboard" text="  Dashboard" styleClass="sidebar-btn, active"
+                    onAction="#showDashboard" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnPatients" text="  Patients" styleClass="sidebar-btn"
+                    onAction="#showPatients" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnConsultations" text="  Consultations" styleClass="sidebar-btn"
+                    onAction="#showConsultations" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnDossiers" text="  Dossiers médicaux" styleClass="sidebar-btn"
+                    onAction="#showDossiers" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnOrdonnances" text="  Ordonnances" styleClass="sidebar-btn"
+                    onAction="#showOrdonnances" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnExamens" text="  Examens / Analyses" styleClass="sidebar-btn"
+                    onAction="#showLaboratoire" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnResultats" text="  Résultats" styleClass="sidebar-btn"
+                    onAction="#showResultats" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnRendezVous" text="  Rendez-vous" styleClass="sidebar-btn"
+                    onAction="#showRendezVous" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnHistorique" text="  Historique" styleClass="sidebar-btn"
+                    onAction="#showHistorique" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnHospitalisation" text="  Hospitalisation" styleClass="sidebar-btn"
+                    onAction="#showHospitalisation" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnFileAttente" text="  File d'attente" styleClass="sidebar-btn"
+                    onAction="#showFileAttente" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnAdmissions" text="  Admissions" styleClass="sidebar-btn"
+                    onAction="#showHospitalisation" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnSorties" text="  Sorties" styleClass="sidebar-btn"
+                    onAction="#showSorties" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnLaboratoire" text="  Laboratoire" styleClass="sidebar-btn"
+                    onAction="#showLaboratoire" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnPharmacie" text="  Pharmacie" styleClass="sidebar-btn"
+                    onAction="#showPharmacie" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnStocks" text="  Stocks" styleClass="sidebar-btn"
+                    onAction="#showStocks" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnPaiements" text="  Paiements" styleClass="sidebar-btn"
+                    onAction="#showPaiements" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnFacturation" text="  Facturation" styleClass="sidebar-btn"
+                    onAction="#showPaiements" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnFactures" text="  Factures" styleClass="sidebar-btn"
+                    onAction="#showFactures" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnImpayes" text="  Impayés" styleClass="sidebar-btn"
+                    onAction="#showImpayes" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnRecus" text="  Reçus" styleClass="sidebar-btn"
+                    onAction="#showRecus" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnRapports" text="  Rapports" styleClass="sidebar-btn"
+                    onAction="#showRapports" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnMaternite" text="  Maternité" styleClass="sidebar-btn"
+                    onAction="#showMaternite" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Label text="SYSTÈME" styleClass="sidebar-section"/>
+            <Button fx:id="btnSettings" text="  Paramètres" styleClass="sidebar-btn"
+                    onAction="#showSettings" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnProfil" text="  Profil" styleClass="sidebar-btn"
+                    onAction="#showProfil" maxWidth="Infinity" alignment="BASELINE_LEFT"/>
+            <Button fx:id="btnLogout" text="  Déconnexion" styleClass="sidebar-btn"
+                    onAction="#onLogout" maxWidth="Infinity" alignment="BASELINE_LEFT"
+                    style="-fx-text-fill: #f87171;"/>
+            <Region prefHeight="16"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="0">
+            <HBox styleClass="topbar" spacing="16" alignment="CENTER_LEFT">
+                <Label fx:id="pageTitleLabel" text="Dashboard" styleClass="topbar-title" HBox.hgrow="ALWAYS"/>
+                <Label fx:id="serverStatusBadge" text="● Serveur" styleClass="server-status, connected"/>
+                <Label fx:id="userLabel" text="Utilisateur" style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
+            </HBox>
+
+            <StackPane fx:id="contentPane" styleClass="content-area" VBox.vgrow="ALWAYS">
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" fx:id="dashboardScroll">
+                    <VBox fx:id="dashboardContent" spacing="20" style="-fx-padding: 0;">
+
+                        <!-- Stats -->
+                        <HBox fx:id="statsBox" spacing="14" alignment="CENTER_LEFT">
+                            <VBox fx:id="statCard1" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon1" text="👥" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue1" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel1" text="Patients" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub1" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                            <VBox fx:id="statCard2" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon2" text="🏥" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue2" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel2" text="Hospitalisés" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub2" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                            <VBox fx:id="statCard3" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon3" text="🩺" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue3" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel3" text="Consultations" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub3" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                            <VBox fx:id="statCard4" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon4" text="🧪" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue4" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel4" text="Analyses" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub4" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                            <VBox fx:id="statCard5" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon5" text="💊" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue5" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel5" text="Médicaments" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub5" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                            <VBox fx:id="statCard6" styleClass="stat-card" spacing="4">
+                                <Label fx:id="statIcon6" text="💰" styleClass="stat-card-icon"/>
+                                <Label fx:id="statValue6" text="—" styleClass="stat-card-value"/>
+                                <Label fx:id="statLabel6" text="Factures" styleClass="stat-card-label"/>
+                                <Label fx:id="statSub6" text="" styleClass="stat-card-sub"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Welcome -->
+                        <VBox styleClass="card" spacing="8">
+                            <Label fx:id="welcomeTitle" text="Bienvenue"
+                                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b;"/>
+                            <Label fx:id="welcomeLabel" text="" style="-fx-text-fill: #64748b; -fx-wrap-text: true;"/>
+                            <Label fx:id="welcomeHint" text=""
+                                   style="-fx-text-fill: #94a3b8; -fx-font-size: 12px; -fx-wrap-text: true;"/>
+                        </VBox>
+
+                        <!-- Quick actions -->
+                        <VBox styleClass="card" spacing="12">
+                            <Label text="Actions rapides" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                            <HBox fx:id="quickActionsBox" spacing="10" alignment="CENTER_LEFT"/>
+                        </VBox>
+
+                        <!-- Contenu principal par rôle -->
+                        <VBox fx:id="roleMainContent" spacing="16"/>
+                    </VBox>
+                </ScrollPane>
+            </StackPane>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.DossiersController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <!-- ===== EN-TÊTE avec recherche patient ===== -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label text="🩺 Dossier médical" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="patientIdField" promptText="ID patient..." prefWidth="150"/>
+        <Button text="🔍 Charger" styleClass="btn-primary" onAction="#onLoad"/>
+        <Button text="⟳ Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+    </HBox>
+
+    <!-- ===== SCROLLPANE PRINCIPAL ===== -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <VBox spacing="20" style="-fx-padding: 0 4 8 4;">
+
+            <!-- 1. Identitovigilance + Alertes -->
+            <HBox spacing="16" VBox.vgrow="NEVER">
+                <!-- Carte identité -->
+                <VBox styleClass="card" spacing="8" prefWidth="380">
+                    <Label text="🆔 Identité" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <Label fx:id="patientInfo" text="Aucun patient chargé" style="-fx-text-fill: #64748b;"/>
+                    <GridPane hgap="10" vgap="6">
+                        <Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label fx:id="nomLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        <Label text="Prénom :" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label fx:id="prenomLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Date naiss. :" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label fx:id="naissanceLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <Label text="IPP :" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <Label fx:id="ippLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    </GridPane>
+                </VBox>
+
+                <!-- Carte alertes critiques -->
+                <VBox styleClass="card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="⚠️ Alertes critiques" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #b91c1c;"/>
+                    <VBox fx:id="alertesContainer" spacing="6"/>
+                </VBox>
+            </HBox>
+
+            <!-- 2. Antécédents médicaux et chirurgicaux -->
+            <VBox styleClass="card" spacing="8">
+                <Label text="📋 Antécédents" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <HBox spacing="20">
+                    <VBox spacing="4">
+                        <Label text="Maladies chroniques" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                        <Label fx:id="maladiesLabel" text="Aucun" style="-fx-text-fill: #64748b;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Opérations" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                        <Label fx:id="operationsLabel" text="Aucune" style="-fx-text-fill: #64748b;"/>
+                    </VBox>
+                    <VBox spacing="4">
+                        <Label text="Antécédents familiaux" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                        <Label fx:id="familiauxLabel" text="Aucun" style="-fx-text-fill: #64748b;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- 3. Traitement en cours -->
+            <VBox styleClass="card" spacing="8">
+                <Label text="💊 Traitement en cours" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <TableView fx:id="traitementTable" prefHeight="120">
+                    <columns>
+                        <TableColumn text="Médicament" prefWidth="200"/>
+                        <TableColumn text="Posologie" prefWidth="150"/>
+                        <TableColumn text="Début" prefWidth="120"/>
+                        <TableColumn text="Fin" prefWidth="120"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- 4. Constantes vitales récentes -->
+            <VBox styleClass="card" spacing="8">
+                <Label text="📊 Constantes vitales (dernières)" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox spacing="4"><Label text="Tension" style="-fx-font-weight: bold;"/><Label fx:id="tensionLabel" text="—"/></VBox>
+                    <VBox spacing="4"><Label text="Pouls" style="-fx-font-weight: bold;"/><Label fx:id="poulsLabel" text="—"/></VBox>
+                    <VBox spacing="4"><Label text="Poids" style="-fx-font-weight: bold;"/><Label fx:id="poidsLabel" text="—"/></VBox>
+                    <VBox spacing="4"><Label text="Température" style="-fx-font-weight: bold;"/><Label fx:id="temperatureLabel" text="—"/></VBox>
+                    <VBox spacing="4"><Label text="Date" style="-fx-font-weight: bold;"/><Label fx:id="constanteDateLabel" text="—"/></VBox>
+                </HBox>
+            </VBox>
+
+            <!-- 5. Documents et examens récents -->
+            <VBox styleClass="card" spacing="8">
+                <Label text="📄 Documents et examens récents" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <ListView fx:id="documentsList" prefHeight="100"/>
+            </VBox>
+
+        </VBox>
+    </ScrollPane>
+
+    <!-- ===== BARRE D'ÉTAT ===== -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.HospitalisationController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <!-- Barre d'actions -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Rechercher par patient (nom/ID)..." prefWidth="220"/>
+        <Button text="🔍 Rechercher" styleClass="btn-primary" onAction="#onSearch"/>
+        <Button text="⟳ Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <ComboBox fx:id="filtreStatut" prefWidth="150" promptText="Filtrer par statut"/>
+        <Button text="+ Nouvelle admission" styleClass="btn-success" onAction="#onAdmit"/>
+    </HBox>
+
+    <!-- Tableau des hospitalisations -->
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="70"/>
+            <TableColumn fx:id="colPatient" text="Patient" prefWidth="120"/>
+            <TableColumn fx:id="colAdmission" text="Date admission" prefWidth="140"/>
+            <TableColumn fx:id="colMotif" text="Motif" prefWidth="180"/>
+            <TableColumn fx:id="colChambre" text="Chambre" prefWidth="120"/>
+            <TableColumn fx:id="colType" text="Type chambre" prefWidth="110"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="120"/>
+            <TableColumn fx:id="colActions" text="Actions" prefWidth="140"/>
+        </columns>
+    </TableView>
+
+    <!-- Barre d'état -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

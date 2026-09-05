@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.hospitalisation";
+option java_outer_classname = "HospitalisationProto";
+
+package hospitalisation;
+
+service HospitalisationService {
+  rpc AdmitPatient(AdmitPatientRequest) returns (HospitalisationResponse);
+  rpc GetHospitalisation(GetHospitalisationRequest) returns (HospitalisationResponse);
+  rpc GetHospitalisations(GetHospitalisationsRequest) returns (HospitalisationsResponse);
+  rpc AssignRoom(AssignRoomRequest) returns (HospitalisationResponse);
+  rpc TransferPatient(TransferPatientRequest) returns (HospitalisationResponse);
+  rpc DischargePatient(DischargePatientRequest) returns (HospitalisationResponse);
+  rpc GetHospitalisationHistory(GetHospitalisationHistoryRequest) returns (HospitalisationsResponse);
+}
+
+message Hospitalisation {
+  int64 id = 1;
+  int64 patient_id = 2;
+  string date_admission = 3;
+  string date_sortie = 4;
+  string motif = 5;
+  string statut = 6;          // EN_COURS / SORTI / TRANSFERE
+  int64 chambre_id = 7;
+  int64 lit_id = 8;
+  string numero_chambre = 9;
+  string numero_lit = 10;
+  string observations = 11;
+}
+
+message AdmitPatientRequest {
+  int64 patient_id = 1;
+  string motif = 2;
+  string observations = 3;
+  int64 chambre_id = 4;
+  int64 lit_id = 5;
+}
+
+message GetHospitalisationRequest {
+  int64 id = 1;
+}
+
+message GetHospitalisationsRequest {
+  int64 patient_id = 1;
+  string statut = 2;
+}
+
+message AssignRoomRequest {
+  int64 hospitalisation_id = 1;
+  int64 chambre_id = 2;
+  int64 lit_id = 3;
+}
+
+message TransferPatientRequest {
+  int64 hospitalisation_id = 1;
+  int64 nouvelle_chambre_id = 2;
+  int64 nouveau_lit_id = 3;
+  string motif_transfert = 4;
+}
+
+message DischargePatientRequest {
+  int64 hospitalisation_id = 1;
+  string observations_sortie = 2;
+}
+
+message GetHospitalisationHistoryRequest {
+  int64 patient_id = 1;
+}
+
+message HospitalisationResponse {
+  Hospitalisation hospitalisation = 1;
+}
+
+message HospitalisationsResponse {
+  repeated Hospitalisation hospitalisations = 1;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.SettingsController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <VBox styleClass="card" spacing="14">
+        <Label text="Configuration serveur gRPC" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <GridPane hgap="12" vgap="10">
+            <Label text="Adresse serveur" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="hostField" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="220"/>
+            <Label text="Port Accueil" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="portAccueil" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="100"/>
+        </GridPane>
+        <Label text="Les ports et l'IP sont lus depuis application.properties. Redémarrez l'application après modification du fichier."
+               style="-fx-text-fill: #64748b; -fx-font-size: 12px; -fx-wrap-text: true;"/>
+        <HBox spacing="10">
+            <Button text="Tester la connexion" styleClass="btn-primary" onAction="#testConnection"/>
+            <Label fx:id="testResult" text=""/>
+        </HBox>
+    </VBox>
+
+    <VBox styleClass="card" spacing="10">
+        <Label text="Comptes de démonstration" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <Label text="admin / admin123  →  ADMIN"/>
+        <Label text="medecin / med123  →  MEDECIN"/>
+        <Label text="recep / recep123  →  RECEPTIONNISTE"/>
+        <Label text="pharma / pharma123  →  PHARMACIEN"/>
+        <Label text="caisse / caisse123  →  CAISSIER"/>
+    </VBox>
+</VBox>

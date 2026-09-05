@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.StockController"
+      spacing="14" style="-fx-padding: 0;">
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Gestion des stocks" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Entrée stock" styleClass="btn-success" onAction="#onEntree"/>
+        <Button text="Sortie" styleClass="btn-primary" onAction="#onSortie"/>
+        <Button text="Retour" styleClass="btn-outline" onAction="#onRetour"/>
+        <Button text="Inventaire" styleClass="btn-secondary" onAction="#onInventaire"/>
+        <Button text="Bloquer lot" styleClass="btn-danger" onAction="#onBloquerLot"/>
+        <Button text="Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+    </HBox>
+
+    <!-- Alertes -->
+    <HBox spacing="12">
+        <VBox fx:id="boxFaible" spacing="6" prefWidth="280" styleClass="card">
+            <Label text="⚠ Stocks faibles" style="-fx-font-weight: bold; -fx-text-fill: #b45309;"/>
+            <ListView fx:id="listFaible" prefHeight="100"/>
+        </VBox>
+        <VBox fx:id="boxPeremp" spacing="6" prefWidth="280" styleClass="card">
+            <Label text="⏰ Péremption (FEFO)" style="-fx-font-weight: bold; -fx-text-fill: #991b1b;"/>
+            <ListView fx:id="listPeremp" prefHeight="100"/>
+        </VBox>
+        <VBox fx:id="boxSurstock" spacing="6" prefWidth="280" styleClass="card">
+            <Label text="📦 Surstock" style="-fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+            <ListView fx:id="listSurstock" prefHeight="100"/>
+        </VBox>
+    </HBox>
+
+    <!-- Catalogue -->
+    <Label text="Catalogue (tri FEFO)" style="-fx-font-weight: bold;"/>
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view" prefHeight="220">
+        <columns>
+            <TableColumn fx:id="colCode" text="Code" prefWidth="80"/>
+            <TableColumn fx:id="colNom" text="Nom" prefWidth="150"/>
+            <TableColumn fx:id="colStock" text="Stock" prefWidth="60"/>
+            <TableColumn fx:id="colSeuil" text="Seuil min" prefWidth="70"/>
+            <TableColumn fx:id="colLot" text="Lot" prefWidth="90"/>
+            <TableColumn fx:id="colPeremp" text="Péremption" prefWidth="100"/>
+            <TableColumn fx:id="colStatut" text="Statut" prefWidth="90"/>
+            <TableColumn fx:id="colStup" text="Stup." prefWidth="50"/>
+        </columns>
+    </TableView>
+
+    <!-- Historique -->
+    <Label text="Derniers mouvements" style="-fx-font-weight: bold;"/>
+    <TableView fx:id="tableMvt" prefHeight="140" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="colMvtDate" text="Date" prefWidth="140"/>
+            <TableColumn fx:id="colMvtType" text="Type" prefWidth="90"/>
+            <TableColumn fx:id="colMvtMed" text="Méd. ID" prefWidth="70"/>
+            <TableColumn fx:id="colMvtQte" text="Qté" prefWidth="50"/>
+            <TableColumn fx:id="colMvtStock" text="Avant→Après" prefWidth="100"/>
+            <TableColumn fx:id="colMvtLot" text="Lot" prefWidth="80"/>
+            <TableColumn fx:id="colMvtUser" text="User" prefWidth="80"/>
+            <TableColumn fx:id="colMvtMotif" text="Motif" prefWidth="160"/>
+        </columns>
+    </TableView>
+
+    <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+</VBox>

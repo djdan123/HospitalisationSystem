@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hospital.controller.FileAttenteController"
+      spacing="16" style="-fx-padding: 0;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label text="👥 File d'attente" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Label fx:id="dateLabel" text="Aujourd'hui" style="-fx-text-fill: #64748b; -fx-font-size: 14px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="filtreMedecin" prefWidth="160" promptText="Tous les médecins"/>
+        <ComboBox fx:id="filtreStatut" prefWidth="130" promptText="Filtrer statut"/>
+        <Button text="⟳ Actualiser" styleClass="btn-secondary" onAction="#onRefresh"/>
+        <Button text="➕ Check‑in patient" styleClass="btn-success" onAction="#onCheckIn"/>
+    </HBox>
+
+    <TableView fx:id="table" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn text="Heure" prefWidth="90"/>
+            <TableColumn text="Patient" prefWidth="180"/>
+            <TableColumn text="Médecin" prefWidth="150"/>
+            <TableColumn text="Motif" prefWidth="180"/>
+            <TableColumn text="Statut" prefWidth="130"/>
+            <TableColumn text="Actions" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" text="Prêt" style="-fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <ProgressIndicator fx:id="progress" prefWidth="20" prefHeight="20" visible="false"/>
+    </HBox>
+</VBox>

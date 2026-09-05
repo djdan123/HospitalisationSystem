@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.laboratoire";
+option java_outer_classname = "LaboratoireProto";
+
+package laboratoire;
+
+service LaboratoireService {
+  rpc CreateAnalyse(CreateAnalyseRequest) returns (AnalyseResponse);
+  rpc GetAnalyse(GetAnalyseRequest) returns (AnalyseResponse);
+  rpc GetAnalysesByPatient(GetAnalysesByPatientRequest) returns (AnalysesResponse);
+  rpc UpdateAnalyse(UpdateAnalyseRequest) returns (AnalyseResponse);
+  rpc AddResultat(AddResultatRequest) returns (ResultatResponse);
+  rpc GetResultat(GetResultatRequest) returns (ResultatResponse);
+}
+
+message Analyse {
+  int64 id = 1;
+  int64 patient_id = 2;
+  string type_analyse = 3;
+  string date_demande = 4;
+  string date_prelevement = 5;
+  string statut = 6;          // DEMANDEE / PRELEVEE / EN_COURS / TERMINEE / ANNULEE
+  string observations = 7;
+}
+
+message Resultat {
+  int64 id = 1;
+  int64 analyse_id = 2;
+  string libelle = 3;
+  string valeur = 4;
+  string unite = 5;
+  string valeur_reference = 6;
+  string date_resultat = 7;
+  string interpretation = 8;
+}
+
+message CreateAnalyseRequest {
+  int64 patient_id = 1;
+  string type_analyse = 2;
+  string observations = 3;
+}
+
+message GetAnalyseRequest {
+  int64 id = 1;
+}
+
+message GetAnalysesByPatientRequest {
+  int64 patient_id = 1;
+}
+
+message UpdateAnalyseRequest {
+  int64 id = 1;
+  string statut = 2;
+  string date_prelevement = 3;
+  string observations = 4;
+}
+
+message AddResultatRequest {
+  int64 analyse_id = 1;
+  string libelle = 2;
+  string valeur = 3;
+  string unite = 4;
+  string valeur_reference = 5;
+  string interpretation = 6;
+}
+
+message GetResultatRequest {
+  int64 analyse_id = 1;
+}
+
+message AnalyseResponse {
+  Analyse analyse = 1;
+}
+
+message AnalysesResponse {
+  repeated Analyse analyses = 1;
+}
+
+message ResultatResponse {
+  Resultat resultat = 1;
+}

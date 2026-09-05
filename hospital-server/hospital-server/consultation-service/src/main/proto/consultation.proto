@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.hospital.grpc.consultation";
+option java_outer_classname = "ConsultationProto";
+
+package consultation;
+
+service ConsultationService {
+  rpc CreateConsultation(CreateConsultationRequest) returns (ConsultationResponse);
+  rpc GetConsultation(GetConsultationRequest) returns (ConsultationResponse);
+  rpc GetConsultationsByPatient(GetConsultationsByPatientRequest) returns (ConsultationsResponse);
+  rpc GetConsultationsByDoctor(GetConsultationsByDoctorRequest) returns (ConsultationsResponse);
+  rpc GetAllConsultations(GetAllConsultationsRequest) returns (ConsultationsResponse);
+  rpc UpdateConsultation(UpdateConsultationRequest) returns (ConsultationResponse);
+  rpc CancelConsultation(CancelConsultationRequest) returns (ConsultationResponse);
+}
+
+message Consultation {
+  int64 id = 1;
+  int64 patient_id = 2;
+  int64 medecin_id = 3;
+  string date_consultation = 4;
+  string motif = 5;
+  string diagnostic = 6;
+  string observations = 7;
+  string prescription = 8;
+  string statut = 9;          // PLANIFIEE / EN_COURS / TERMINEE / ANNULEE
+}
+
+message CreateConsultationRequest {
+  int64 patient_id = 1;
+  int64 medecin_id = 2;
+  string date_consultation = 3;
+  string motif = 4;
+  string observations = 5;
+}
+
+message GetConsultationRequest {
+  int64 id = 1;
+}
+
+message GetConsultationsByPatientRequest {
+  int64 patient_id = 1;
+}
+
+message GetConsultationsByDoctorRequest {
+  int64 medecin_id = 1;
+}
+
+message GetAllConsultationsRequest {}
+
+message UpdateConsultationRequest {
+  int64 id = 1;
+  string diagnostic = 2;
+  string observations = 3;
+  string prescription = 4;
+  string statut = 5;
+}
+
+message CancelConsultationRequest {
+  int64 id = 1;
+  string motif_annulation = 2;
+}
+
+message ConsultationResponse {
+  Consultation consultation = 1;
+}
+
+message ConsultationsResponse {
+  repeated Consultation consultations = 1;
+}
